@@ -44,7 +44,7 @@ function startTypewriter() {
   .pause(700)
   .break()
   .type("Every moment with you is like my favorite line of code—perfect.")
-  .pause(500)
+  .pause(450)
   .type(".. mostly. 😉")
   .break()
   .type("I love you more than words can type.")
