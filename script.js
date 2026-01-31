@@ -37,17 +37,17 @@ function startTypewriter() {
       gsap.to("#letterNext", { opacity: 1, pointerEvents: "all", duration: 1 });
     }
   })
-  .type("My dearest Phoe  Phoe,")
-  .pause(700)           // Short pause
+  .type("My dearest Phoe Phoe,")
+  .pause(600)           // Short pause 
   .break()
   .type("I build things with code, but you build things in my heart. ❤️")
-  .pause(700)
+  .pause(600)
   .break()
   .type("Every moment with you is like my favorite line of code—perfect.")
-  .pause(450)
+  .pause(400)
   .type(".. mostly. 😉")
   .break()
-  .type("I love you more than words can type.")
+  .type("I love you to the sun and back because the moon is too close.")
   .go();
 }
 s
