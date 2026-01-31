@@ -1,11 +1,15 @@
-// GSAP Transition Logic
+// Function to swap slides with GSAP animations
 function showNext(currentId, nextId) {
+  // Play button click sound
   const pop = document.getElementById("popSound");
   pop.currentTime = 0;
   pop.play();
 
+  // Play background music if starting
   const bgMusic = document.getElementById("bgMusic");
-  if (currentId === 'hero' && bgMusic.paused) { bgMusic.play(); }
+  if (currentId === 'hero' && bgMusic.paused) { 
+    bgMusic.play().catch(e => console.log("Music play blocked")); 
+  }
 
   const tl = gsap.timeline();
   
@@ -19,33 +23,35 @@ function showNext(currentId, nextId) {
     { duration: 0.8, opacity: 1, scale: 1, y: 0, ease: "elastic.out(1, 0.8)" }
   );
 
+  // Trigger typewriter if entering letter section
   if (nextId === 'letter') { startTypewriter(); }
 }
 
-// Typing Effect for Letter
+// TYPING LOGIC (Speed Adjusted: Faster character typing & shorter pauses)
 function startTypewriter() {
   new TypeIt("#typewriter", {
-    speed: 50,
+    speed: 35,          // Speed per character (Lower is faster)
     waitUntilVisible: true,
     afterComplete: function (instance) {
+      // Show the 'Next' button after typing finishes
       gsap.to("#letterNext", { opacity: 1, pointerEvents: "all", duration: 1 });
     }
   })
   .type("My dearest PhoePhoe,")
-  .pause(1000)
+  .pause(800)           // Short pause
   .break()
   .type("I build things with code, but you build things in my heart. ❤️")
-  .pause(1000)
+  .pause(800)
   .break()
   .type("Every moment with you is like my favorite line of code—perfect.")
-  .pause(700)
+  .pause(500)
   .type(".. mostly. 😉")
   .break()
   .type("I love you more than words can type.")
   .go();
 }
 
-// Floating Hearts
+// Background Heart Generator
 function createHearts() {
   const heartBg = document.getElementById("heartBg");
   const emojis = ["❤️", "💖", "💕", "✨"];
@@ -57,6 +63,7 @@ function createHearts() {
     div.style.fontSize = Math.random() * 20 + 20 + "px";
     div.style.position = "absolute";
     div.style.bottom = "-5vh";
+    div.style.zIndex = "-1";
     heartBg.appendChild(div);
 
     gsap.to(div, {
@@ -82,6 +89,7 @@ noBtn.addEventListener("mouseover", () => {
   const maxX = container.clientWidth - noBtn.clientWidth;
   const maxY = container.clientHeight - noBtn.clientHeight;
 
+  // Jump within the container
   gsap.to(noBtn, {
     x: Math.random() * maxX - (container.clientWidth / 2) + (noBtn.clientWidth / 2),
     y: Math.random() * maxY - (container.clientHeight / 2) + (noBtn.clientHeight / 2),
@@ -89,15 +97,21 @@ noBtn.addEventListener("mouseover", () => {
     ease: "power2.out"
   });
 
+  // Make Yes button grow as "punishment"
   scale += 0.2;
   gsap.to(yesBtn, { scale: scale, duration: 0.3, ease: "back.out(2)" });
   
-  const jokes = ["Nice try!", "Too slow!", "Not today!", "Click the pink one!"];
+  const jokes = ["Nice try!", "Too slow!", "Not today!", "Click the pink one!", "Nope!", "Haha!"];
   funnyText.innerText = jokes[Math.floor(Math.random() * jokes.length)];
 });
 
-// Final Confetti
+// Final Confetti Celebration
 yesBtn.addEventListener("click", () => {
-  confetti({ particleCount: 400, spread: 120, origin: { y: 0.6 } });
+  confetti({ 
+    particleCount: 400, 
+    spread: 120, 
+    origin: { y: 0.6 },
+    colors: ['#ff5c8a', '#ffafbd', '#ffffff']
+  });
   showNext('question', 'final');
 });
