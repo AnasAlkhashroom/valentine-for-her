@@ -4,16 +4,22 @@
   <meta charset="UTF-8" />
   <title>For My Phoe Phoe 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Premium Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  
+
+  <!-- Animation Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </head>
+
 <body>
 
+  <!-- Background -->
   <div class="aura-container">
     <div class="aura blob1"></div>
     <div class="aura blob2"></div>
@@ -22,87 +28,143 @@
   </div>
   <div class="heart-bg" id="heartBg"></div>
 
-  <audio id="bgMusic" loop><source src="your-song.mp3" type="audio/mpeg"></audio>
-  <audio id="popSound"><source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg"></audio>
+  <!-- Audio -->
+  <audio id="bgMusic" loop>
+    <source src="Edd_Sheeran_-_Perfect_(mp3.pm).mp3" type="audio/mpeg">
+  </audio>
+  <audio id="popSound">
+    <source src="Edd_Sheeran_-_Perfect_(mp3.pm).mp3" type="audio/mpeg">
+  </audio> 
 
+  <!-- Navigation -->
+  <div class="nav-ui">
+    <button class="back-btn hidden" id="backBtn" onclick="goBack()">← Back</button>
+    <div class="progress-dots" id="progressDots"></div>
+  </div>
+
+  <!-- Music Toggle --
+  <div class="music-player" onclick="toggleMusic()">
+    <div id="musicIcon">🎵</div>
+  </div> -->
+
+  <!-- Lightbox -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <div class="lightbox-content">
-      <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightboxImg">
       <p id="lightboxText"></p>
     </div>
   </div>
 
+  <!-- HERO -->
   <section id="hero" class="active slide">
-    <div class="glass-card main-hero" data-tilt>
+    <div class="floating-milestones">
+      <div class="m-item" data-tilt>
+        <div class="m-icon">💬</div>
+        <span id="textDate">0</span>
+        <p>Days since first text</p>
+        <small>Nov 26, 2022</small>
+      </div>
+      <div class="m-item" data-tilt>
+        <div class="m-icon">📍</div>
+        <span id="meetDate">0</span>
+        <p>Days since we met</p>
+        <small>Dec 16, 2022</small>
+      </div>
+      <div class="m-item" data-tilt>
+        <div class="m-icon">💋</div>
+        <span id="kissDate">0</span>
+        <p>Days since first kiss</p>
+        <small>Mar 4, 2023</small>
+      </div>
+      <div class="m-item together" data-tilt>
+        <div class="m-icon big">💍</div>
+        <span id="togetherDate">0</span>
+        <p>Days of True Happiness</p>
+        <small>Since May 18, 2023</small>
+      </div>
+    </div>
+
+    <div class="glass-card">
       <h1 class="glitter-text">Hi Phoe Phoe 💕</h1>
-      <p class="subtitle">A cute little website for the cutest and my favorite person ever.</p>
-      <button class="main-btn btn-glow" onclick="showNext('hero', 'letter')">Enter My Heart 💌</button>
+      <p class="subtitle">A cute little website for my favorite person.</p>
+      <button class="main-btn" onclick="showNext('hero','letter')">Enter My Heart 💌</button>
     </div>
   </section>
 
+  <!-- LETTER -->
   <section id="letter" class="slide">
-    <div class="glass-card letter-card">
-      <h2 class="serif-title">My Heart & Whole World</h2>
+    <div class="glass-card">
+      <h2 class="serif-title">My Heart and My Whole World</h2>
       <div id="typewriter" class="type-container"></div>
-      <button class="main-btn hidden-btn" id="letterNext" onclick="showNext('letter', 'gallery')">Continue 📸</button>
+      <button class="main-btn hidden-btn" id="letterNext" onclick="showNext('letter','gallery')">
+        Continue 📸
+      </button>
     </div>
   </section>
 
+  <!-- GALLERY -->
   <section id="gallery" class="slide">
-    <div class="glass-card gallery-container large-card">
+    <div class="glass-card large-card">
       <h2 class="serif-title">Our Timeline 🎞️</h2>
       <div class="photo-scrapbook">
-        <div class="polaroid p1" data-tilt onclick="openLightbox('First_pics.JPG', 'Our First Picture Together 📸')">
+
+        <div class="polaroid" data-tilt onclick="openLightbox('First_pics.JPG','Our First Picture Together 📸')">
           <div class="tape top-left"></div>
           <img src="First_pics.JPG">
-          <p>Our First Picture 📸</p>
+          <p>First Pic Together</p>
         </div>
-        <div class="polaroid p2" data-tilt onclick="openLightbox('First_boston_Trip.jpeg', 'First Trip as a Couple 🥰')">
-          <div class="tape top-left"></div>
+
+        <div class="polaroid" data-tilt onclick="openLightbox('First_boston_Trip.jpeg','Our First Boston Trip 🥰')">
+          <div class="tape top-right"></div>
           <img src="First_boston_Trip.jpeg">
-          <p>First Trip as a Couple 🥰</p>
+          <p>First Boston Trip</p>
         </div>
-        <div class="polaroid p3" data-tilt onclick="openLightbox('First_Datenight.jpeg', 'First Date Night ✨')">
+
+        <div class="polaroid" data-tilt onclick="openLightbox('First_Datenight.jpeg','Our First Date Night ✨')">
           <div class="tape top-right"></div>
           <img src="First_Datenight.jpeg">
-          <p>First Date Night ✨</p>
+          <p>First Date Night</p>
         </div>
-        <div class="polaroid p4" data-tilt onclick="openLightbox('Niagra_Falls.jpeg', 'Niagara Falls Trip 🌊')">
+
+        <div class="polaroid" data-tilt onclick="openLightbox('Niagra_Falls.jpeg','Niagara Falls Adventure 🌊')">
           <div class="tape top-left"></div>
           <img src="Niagra_Falls.jpeg">
-          <p>Niagara Falls Trip 🌊</p>
+          <p>Niagara Trip</p>
         </div>
-        <div class="polaroid p5" data-tilt onclick="openLightbox('First_Vacation.jpeg', 'First Real Vacation ✈️')">
+
+        <div class="polaroid" data-tilt onclick="openLightbox('First_Vacation.jpeg','First Real Vacation ✈️')">
           <div class="tape top-right"></div>
           <img src="First_Vacation.jpeg">
-          <p>First Real Vacation ✈️</p>
+          <p>Dubai Vacation</p>
         </div>
-        <div class="polaroid p6" data-tilt onclick="openLightbox('Love.JPG', 'To Many More Endless Memories... 🥂')">
+
+        <div class="polaroid" data-tilt onclick="openLightbox('Love.JPG','To Many More Endless Memories... 🥂')">
           <div class="tape top-right"></div>
           <img src="Love.JPG">
-          <p>To Many More Endless Memories... 🥂</p>
+          <p>To Many More</p>
         </div>
+
       </div>
-      <button class="main-btn" onclick="showNext('gallery', 'question')">The Big Question 💖</button>
+      <button class="main-btn" onclick="showNext('gallery','question')">The Big Question 💖</button>
     </div>
   </section>
 
+  <!-- QUESTION -->
   <section id="question" class="slide">
-    <div class="glass-card quest-card" id="questionCard">
-      <h2 class="pulse-text serif-title">Will you be my Valentine? 💝</h2>
-      <p id="funnyText" class="tease-text">Choose wisely... 😉</p>
-      <div class="button-area" id="container">
-        <button id="yes" class="main-btn yes-btn">YES! 💕</button>
-        <button id="no" class="main-btn no-btn">No 🙃</button>
+    <div class="glass-card" id="container">
+      <h2 class="serif-title">Will you be my Valentine? 💝</h2>
+      <div class="button-area">
+        <button id="yes" class="main-btn">YES! 💕</button>
+        <button id="no" class="main-btn">No 🙃</button>
       </div>
     </div>
   </section>
 
+  <!-- FINAL -->
   <section id="final" class="slide">
-    <div class="glass-card final-card">
-      <div class="victory-icon">💍</div>
-      <h1 class="glitter-text serif-title">I Knew It! 😍</h1>
-      <p class="final-msg">I can't wait to spend the rest of my life with you.</p>
+    <div class="glass-card">
+      <h1 class="glitter-text">I Knew It! 😍</h1>
+      <p>I can't wait to spend the rest of my life with you.</p>
       <p class="signature">— Your Dearest Lover, Anas 💘</p>
     </div>
   </section>
