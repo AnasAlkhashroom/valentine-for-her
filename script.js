@@ -1,15 +1,19 @@
 // Section order for progress & back
 const SECTION_ORDER = ['hero', 'letter', 'gallery', 'question', 'final'];
 let currentSectionId = 'hero';
+let typeItInstance = null; // Track the typewriter to prevent scrambling
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
   VanillaTilt.init(document.querySelectorAll(".polaroid, .m-item"), {
       max: 10, speed: 400, scale: 1.05, glare: true, "max-glare": 0.2,
+      
   });
   updateCounter();
   buildProgressDots();
   updateNavUI();
+  const bgMusic = document.getElementById("bgMusic");
+  bgMusic.volume = 0.16;
 });
 
 // Milestone Logic with Animated Count-up
@@ -108,6 +112,10 @@ function goToSection(id) {
 
 function goBack() {
   const idx = SECTION_ORDER.indexOf(currentSectionId);
+  if (typeItInstance) {
+    typeItInstance.destroy();
+    typeItInstance = null;
+}
   if (idx <= 0) return;
   const prevId = SECTION_ORDER[idx - 1];
   const prevSection = document.getElementById(prevId);
@@ -146,8 +154,8 @@ function showNext(currentId, nextId) {
   currentSectionId = nextId;
   updateNavUI();
   try { document.getElementById("popSound").play(); } catch (_) {}
-  const bgMusic = document.getElementById("bgMusic");
-  if (currentId === 'hero' && bgMusic.paused) try { bgMusic.play(); } catch (_) {}
+  //const bgMusic = document.getElementById("bgMusic");
+  //if (currentId === 'hero' && bgMusic.paused) try { bgMusic.play(); } catch (_) {}
 
   const currentCard = document.querySelector(`#${currentId} .glass-card`);
   const nextSection = document.getElementById(nextId);
@@ -166,15 +174,21 @@ function showNext(currentId, nextId) {
 function startTypewriter() {
   const el = document.getElementById("typewriter");
   if (!el) return;
+
+  // Kill old instance and clear box to stop scrambling
+  if (typeItInstance) {
+      typeItInstance.destroy();
+  }
   el.innerHTML = "";
-  new TypeIt("#typewriter", {
-    speed: 28,
+
+  typeItInstance = new TypeIt("#typewriter", {
+    speed: 18, 
     waitUntilVisible: true,
     afterComplete: () => {
       gsap.to("#letterNext", { opacity: 1, pointerEvents: "all", duration: 0.5 });
     }
   })
-  .type("I built this website for you just to show you this little gesture of how much I love you and how much I would do for you for the rest of my life. I am in love with you and the moment that you walked into my life (slid into my dm's) is the moment that my whole life brightened up. Life suddenly has purpose and something to look forward for and that was to talk to you and see you. Spending time with you made me the man I am today. Your love to me saved me in so many different ways, it saved my soul.")
+  .type("I built this website for you just to show you this little gesture of how much I love you and how much I would do for you for the rest of my life. I am in love with you and the moment that you walked into my life (slid into my dm's) is the moment that my whole life brightened up. Life suddenly had purpose and something to look forward for and that was to talk to you and see you. Spending time with you made me the man I am today. Your love to me saved me in so many different ways, it saved my soul.")
   .pause(400).break().break()
   .type("I promise you one thing that I am certain will never change. I am and will always put so much effort into showing you how loved you are. You are my princess and the love of my life. This is a lifelong promise and I want to celebrate our love every single day but that's 'yucky,' so this is a valid excuse!")
   .pause(400).break().break()
@@ -198,8 +212,18 @@ createHearts();
 function toggleMusic() {
   const music = document.getElementById("bgMusic");
   const icon = document.getElementById("musicIcon");
-  if (music.paused) { music.play(); icon.innerText = "❤️"; } 
-  else { music.pause(); icon.innerText = "🎵"; }
+  const player = document.querySelector(".music-player");
+  
+  if (music.paused) {
+    music.play();
+    icon.innerText = "❤️"; // Changes icon to heart when playing
+    player.style.background = "#ff4d6d"; // Slightly deeper pink when active
+    gsap.to(player, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
+  } else {
+    music.pause();
+    icon.innerText = "🎵"; // Changes back to note when paused
+    player.style.background = "var(--accent)";
+  }
 }
 
 const noBtn = document.getElementById("no");

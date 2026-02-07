@@ -182,8 +182,23 @@ section.active { display: flex; }
 
 /* BUTTONS */
 .button-area { position: relative; width: 100%; height: 180px; margin-top: 20px; }
-#no { position: absolute; left: 65%; top: 50%; transform: translate(-50%, -50%); background: #ffccd5; color: #ff5c8a; transition: all 0.2s ease; }
-#yes { position: absolute; left: 35%; top: 50%; transform: translate(-50%, -50%); transition: transform 0.3s ease; }
+#no { 
+  position: absolute; 
+  left: 65%; 
+  top: 50%; 
+  transform: translate(-50%, -50%); 
+  background: #ffccd5; 
+  color: #ff5c8a; 
+  transition: all 0.2s ease; 
+}
+
+#yes { 
+  position: absolute; 
+  left: 35%; 
+  top: 50%; 
+  transform: translate(-50%, -50%); 
+  transition: transform 0.3s ease; 
+}
 .main-btn { background: var(--accent); color: white; border: none; padding: 14px 40px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; z-index: 100; }
 .main-btn.hidden-btn { opacity: 0; pointer-events: none; }
 .jar-btn { background: var(--accent); color: white; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; transition: 0.3s; }
@@ -212,9 +227,75 @@ section.active { display: flex; }
 }
 .progress-dots .dot.active { background: var(--accent); transform: scale(1.2); }
 
-.music-player { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(255, 92, 138, 0.2); }
-.heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-.glitter-text { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--accent); }
+/* UPDATED: Chic & Obvious Music Player */
+.music-player {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--accent); /* Vibrant pink so it's visible */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(255, 92, 138, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.music-player:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(255, 92, 138, 0.5);
+}
+
+/* The Pulsing Ring Effect */
+.music-player::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: musicPulse 2s linear infinite;
+  opacity: 0;
+}
+
+@keyframes musicPulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.music-heart {
+  font-size: 1.6rem;
+  transition: 0.3s;
+}
+
+/* Optional: Subtle label that appears when hovering */
+.music-player::after {
+  content: 'Play Our Song';
+  position: absolute;
+  right: 70px;
+  background: white;
+  color: var(--accent);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: 0.3s;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.music-player:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
 
 /* Lightbox open: prevent background scroll */
 body.lightbox-open { overflow: hidden; }
